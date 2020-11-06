@@ -1,5 +1,5 @@
 #include <iostream>
-
+using namespace std;
 bool chain(long long seq, int used, const int a[])
 {
 	int end = seq % 100;
@@ -7,17 +7,24 @@ bool chain(long long seq, int used, const int a[])
 		if (a[end * 100 + seq / 10000000000LL] & (1 << 5)) {
 			int sum = end * 100 + seq / 10000000000LL;
 			for (; used > 1; used >>= 1, seq /= 100)
+			{
 				sum += seq % 10000;
-			std::cout << sum << "\n";
+			}
+			cout << sum << "\n";
 			return true;
 		}
 		return false;
 	}
-	for (int start = 10; start < 100; start++) {
+	for (int start = 10; start < 100; start++) 
+	{
 		int satisfies = a[end * 100 + start] & (~used);
 		for (int crit = 0; satisfies > 0; satisfies >>= 1, crit++)
+		{
 			if (satisfies % 2 && chain(seq * 100 + start, used + (1 << crit), a))
+			{
 				return true;
+			}
+		}
 	}
 	return false;
 }
